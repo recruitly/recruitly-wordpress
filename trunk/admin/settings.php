@@ -26,10 +26,9 @@ function recruitly_wordpress_settings()
 	        if(strpos($apiServer, 'recruitly.io') !== false) {
 
 		        update_option( 'recruitly_apiserver', $apiServer );
-
 		        update_option( 'recruitly_apikey', $apiKey );
                 update_option( 'recruitly_refresh', ( int ) $_POST[ 'recruitly_refresh' ] );
-                // recruitly_refresh_cron();
+
 		        recruitly_wordpress_insert_post_type();
 
 	        } else {
