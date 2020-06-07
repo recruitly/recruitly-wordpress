@@ -11,7 +11,7 @@ function recruitly_wordpress_job_application_form($content)
 
     global $post;
 
-    if ($post->post_type == 'recruitlyjobs') {
+    if ($post->post_type == RECRUITLY_POST_TYPE) {
 
         $val = get_post_custom_values('jobId');
         $jobId='';
@@ -24,7 +24,7 @@ function recruitly_wordpress_job_application_form($content)
                 $jobId = $val;
             }
 
-            $content .= '<div class="cool-jobview-footer" style="padding-bottom:25px;font-weight: bold;"><a target="_blank" class="cool-apply-btn btn" data-featherlight="iframe" data-featherlight-iframe-frameborder="0" data-featherlight-iframe-height="635" data-featherlight-iframe-width="450" href="https://recruitly.io/jobs/widget/apply/' . $jobId . '">Apply</a></div>';
+            $content .= '<div class="cool-jobview-footer" style="padding-bottom:25px;font-weight:bold;"><a target="_blank" class="cool-apply-btn btn" data-featherlight="iframe" data-featherlight-iframe-frameborder="0" data-featherlight-iframe-style="display:block;border:none;height:90vh;width:550px;" href="https://recruitly.io/jobs/widget/apply/' . $jobId . '">Apply</a></div>';
         }
 
     }

@@ -2,7 +2,7 @@
 /**
  * Deletes all jobs from wordpress.
  *
- * This function is called after deactivating recruit.cool plugin and
+ * This function is called after deactivating Recruitly plugin and
  * after making configuration changes.
  */
 function recruitly_wordpress_truncate_post_type() {
@@ -10,7 +10,9 @@ function recruitly_wordpress_truncate_post_type() {
 
 		global $wpdb;
 
-		$query = "SELECT ID FROM $wpdb->posts WHERE post_type ='recruitlyjobs'";
+        $postType= RECRUITLY_POST_TYPE;
+
+		$query = "SELECT ID FROM $wpdb->posts WHERE post_type = '$postType'";
 
 		$results = $wpdb->get_results( $query );
 
@@ -47,6 +49,7 @@ function recruitly_wordpress_insert_post_type()
         esc_url( get_option( 'recruitly_apiserver' ) )
     );
 
+
 }
 
 /**
@@ -82,7 +85,8 @@ function recruitly_wordpress_sync_post_type($apiKey,$apiServer) {
 		//Check if this job exists in the custom post type.
 		global $wpdb;
 
-		$queryRjobs = "SELECT ID FROM $wpdb->posts WHERE post_type ='recruitlyjobs'";
+		$postType= RECRUITLY_POST_TYPE;
+		$queryRjobs = "SELECT ID FROM $wpdb->posts WHERE post_type = '$postType'";
 
 		$queryResults = $wpdb->get_results( $queryRjobs );
 
@@ -109,7 +113,7 @@ function recruitly_wordpress_sync_post_type($apiKey,$apiServer) {
 			if ( in_array( $job->id, $jobIdList, false ) == 0 ) {
 
 				$post_id = wp_insert_post( array(
-					'post_type'      => 'recruitlyjobs',
+					'post_type'      => RECRUITLY_POST_TYPE,
 					'post_title'     => $job->title,
 					'post_content'   => $job->description,
 					'post_status'    => 'publish',
@@ -170,7 +174,7 @@ function recruitly_wordpress_sync_post_type($apiKey,$apiServer) {
 
 				$post_id = wp_update_post( array(
 					'ID'             => $postIds[ $job->id ],
-					'post_type'      => 'recruitlyjobs',
+					'post_type'      => RECRUITLY_POST_TYPE,
 					'post_title'     => $job->title,
 					'post_content'   => $job->description,
 					'post_status'    => 'publish',
@@ -255,6 +259,8 @@ function recruitly_wordpress_sync_post_type($apiKey,$apiServer) {
 		}
 
         update_option('recruitly_last_sync_time', time());
+
+        recruitly_admin_notice('Recruitly data sync completed successfully!','success');
 
 	} catch ( Exception $ex ) {
 		recruitly_admin_notice( $ex->getMessage(), 'error' );

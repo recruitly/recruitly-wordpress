@@ -20,7 +20,7 @@ function recruitly_wordpress_setup_taxonomies() {
 			'new_item_name' => 'New Job Sector',
 			'menu_name'     => 'Job Sectors'
 		);
-		register_taxonomy( 'jobsector', 'recruitlyjobs', array(
+		register_taxonomy( 'jobsector', RECRUITLY_POST_TYPE, array(
 			'hierarchical'      => true,
 			'labels'            => $labels,
 			'query_var'         => true,
@@ -38,7 +38,7 @@ function recruitly_wordpress_setup_taxonomies() {
 			'new_item_name' => 'New County',
 			'menu name'     => 'Countys'
 		);
-		register_taxonomy( 'jobcounty', 'recruitlyjobs', array(
+		register_taxonomy( 'jobcounty', RECRUITLY_POST_TYPE, array(
 			'hierarchical'      => true,
 			'labels'            => $labels,
 			'query_var'         => true,
@@ -56,7 +56,7 @@ function recruitly_wordpress_setup_taxonomies() {
 			'new_item_name' => 'New City',
 			'menu name'     => 'Cities'
 		);
-		register_taxonomy( 'jobcity', 'recruitlyjobs', array(
+		register_taxonomy( 'jobcity', RECRUITLY_POST_TYPE, array(
 			'hierarchical'      => true,
 			'labels'            => $labels,
 			'query_var'         => true,
@@ -74,7 +74,7 @@ function recruitly_wordpress_setup_taxonomies() {
 			'new_item_name' => 'New Job Type',
 			'menu name'     => 'Job Types'
 		);
-		register_taxonomy( 'jobtype', 'recruitlyjobs', array(
+		register_taxonomy( 'jobtype', RECRUITLY_POST_TYPE, array(
 			'hierarchical'      => true,
 			'labels'            => $labels,
 			'query_var'         => true,
@@ -93,10 +93,10 @@ function recruitly_wordpress_delete_taxonomies() {
 
 	try {
 
-		unregister_taxonomy_for_object_type( 'jobcounty', 'recruitlyjobs' );
-		unregister_taxonomy_for_object_type( 'jobsector', 'recruitlyjobs' );
-		unregister_taxonomy_for_object_type( 'jobtype', 'recruitlyjobs' );
-		unregister_taxonomy_for_object_type( 'jobcity', 'recruitlyjobs' );
+		unregister_taxonomy_for_object_type( 'jobcounty', RECRUITLY_POST_TYPE );
+		unregister_taxonomy_for_object_type( 'jobsector', RECRUITLY_POST_TYPE );
+		unregister_taxonomy_for_object_type( 'jobtype', RECRUITLY_POST_TYPE );
+		unregister_taxonomy_for_object_type( 'jobcity', RECRUITLY_POST_TYPE );
 
 	} catch ( Exception $ex ) {
 		recruitly_admin_notice( $ex->getMessage(), 'error' );

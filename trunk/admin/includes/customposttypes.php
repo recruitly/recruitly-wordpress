@@ -2,7 +2,7 @@
 add_action( 'init', 'recruitly_wordpress_setup_post_type', 0 );
 
 /**
- * Register a Custom Post Type "recruitlyjobs".
+ * Register a Custom Post Type as defined in constant RECRUITLY_POST_TYPE.
  *
  * We post all jobs to this custom post type.
  */
@@ -38,7 +38,7 @@ function recruitly_wordpress_setup_post_type() {
         'show_in_admin_bar'   => true,
         'menu_position'       => 5,
         'can_export'          => true,
-        'has_archive'         => true,
+        'has_archive'         => false,
         'exclude_from_search' => false,
         'publicly_queryable'  => true,
         'capability_type' => 'post',
@@ -49,6 +49,12 @@ function recruitly_wordpress_setup_post_type() {
     );
 
     // Registering your Custom Post Type
-    register_post_type( 'recruitlyjobs', $args );
+    register_post_type( RECRUITLY_POST_TYPE, $args );
 
 }
+
+function recruitly_wordpress_rewrite_flush() {
+    flush_rewrite_rules();
+}
+
+add_action( 'after_switch_theme', 'recruitly_wordpress_rewrite_flush' );

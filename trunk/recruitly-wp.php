@@ -3,11 +3,13 @@
 Plugin Name: Recruitly Wordpress Plugin
 Plugin URI: https://recruitly.io
 Description: Recruitly job board integration.
-Version: 1.0.32
+Version: 1.0.33
 Author: Recruitly
 Author URI: https://recruitly.io
 License: GNU GENERAL PUBLIC LICENSE
 */
+defined( 'RECRUITLY_POST_TYPE' ) or define( 'RECRUITLY_POST_TYPE', 'recruitlyjobs' );
+
 register_activation_hook(__FILE__, 'activate_recruitly_wordpress_plugin');
 register_deactivation_hook(__FILE__, 'deactivate_recruitly_wordpress_plugin');
 register_uninstall_hook(__FILE__, 'uninstall_recruitly_wordpress_plugin');
@@ -31,17 +33,14 @@ include( plugin_dir_path( __FILE__ ) . 'admin/dataloader.php');
 
 function activate_recruitly_wordpress_plugin()
 {
-	/*if( !wp_next_scheduled( RECRUITLY_CRON_ACTION ) ) {
-		wp_schedule_event( time(), 'recruitly', RECRUITLY_CRON_ACTION );
-	}*/
 	recruitly_wordpress_truncate_post_type();
 }
 
 function deactivate_recruitly_wordpress_plugin()
 {
 	recruitly_wordpress_truncate_post_type();
-	if ( isset( $wp_post_types[ 'recruitlyjobs' ] ) ) {
-		unset( $wp_post_types[ 'recruitlyjobs'  ] );
+	if ( isset( $wp_post_types[ RECRUITLY_POST_TYPE ] ) ) {
+		unset( $wp_post_types[ RECRUITLY_POST_TYPE  ] );
 	}
 	wp_clear_scheduled_hook( RECRUITLY_CRON_ACTION );
 }
@@ -56,8 +55,8 @@ function uninstall_recruitly_wordpress_plugin()
 
 	recruitly_wordpress_delete_taxonomies();
 
-	if ( isset( $wp_post_types[ 'recruitlyjobs' ] ) ) {
-		unset( $wp_post_types[ 'recruitlyjobs'  ] );
+	if ( isset( $wp_post_types[ RECRUITLY_POST_TYPE ] ) ) {
+		unset( $wp_post_types[ RECRUITLY_POST_TYPE  ] );
 	}
 }
 
@@ -94,11 +93,11 @@ add_action( 'wp', function() {
 });
 
 function recruitly_scripts_to_header() {
-    wp_enqueue_script('jquery');  // Enqueue jQuery already built into WordPress
+    wp_enqueue_script('jquery');
     wp_register_script( 'featherlight-js', 'https://cdnjs.cloudflare.com/ajax/libs/featherlight/1.7.13/featherlight.min.js', array('jquery'),'',true  );
     wp_register_style( 'featherlight-css','https://cdnjs.cloudflare.com/ajax/libs/featherlight/1.7.13/featherlight.min.css','','', 'screen' );
-    wp_enqueue_script( 'featherlight-js' );  // Enqueue our first script
-    wp_enqueue_style( 'featherlight-css' ); // Enqueue our stylesheet
+    wp_enqueue_script( 'featherlight-js' );
+    wp_enqueue_style( 'featherlight-css' );
 }
 
 //Hooks our custom function into wp_enqueue_scripts function

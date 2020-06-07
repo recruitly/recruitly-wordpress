@@ -43,7 +43,7 @@ function recruitly_wordpress_job_listing_shortcode() {
     }
 
     $args = array(
-        'post_type'      => 'recruitlyjobs',
+        'post_type'      => RECRUITLY_POST_TYPE,
         'posts_per_page' => 25,
         'meta_key'       => 'uniqueId',
         'orderby'        => 'meta_value_num',
@@ -134,7 +134,7 @@ function recruitly_wordpress_job_sector_widget_shortcode($atts) {
     );
 
     $args = array(
-        'post_type'      => 'recruitlyjobs',
+        'post_type'      => RECRUITLY_POST_TYPE,
         'posts_per_page' => $job_count,
         'meta_key'       => 'jobStatus',
         'meta_value'     => 'OPEN',
@@ -181,7 +181,7 @@ function recruitly_wordpress_job_tags_widget_shortcode($atts) {
     );
 
     $args = array(
-        'post_type'      => 'recruitlyjobs',
+        'post_type'      => RECRUITLY_POST_TYPE,
         'posts_per_page' => $job_count,
         'meta_value' => $job_tagval,
         'paged'          => 1

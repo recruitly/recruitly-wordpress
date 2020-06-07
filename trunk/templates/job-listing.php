@@ -37,8 +37,7 @@
                     <a class="cool-job-apply-btn"
                        data-featherlight="iframe"
                        data-featherlight-iframe-frameborder="0"
-                       data-featherlight-iframe-height="635"
-                       data-featherlight-iframe-width="450"
+                       data-featherlight-iframe-style="display:block;border:none;height:90vh;width:550px;"
                        title="Apply for <?php the_title(); ?>"
                        href="https://recruitly.io/jobs/widget/apply/<?php echo recruitly_get_custom_post_value('jobId'); ?>" target="_blank"
                        style="font-weight:bold;">Apply</a>
